@@ -28,3 +28,7 @@ app.use((err,req,res,next)=>{
         message,
     });
 });
+
+// In Express.js, the next function is automatically available as a parameter in middleware functions, even if it is not explicitly 
+// imported. This allows middleware functions
+//  to pass control to the next middleware in the stack or to handle errors by passing them to the error handling middleware.
