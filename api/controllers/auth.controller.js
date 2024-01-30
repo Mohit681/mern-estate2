@@ -36,7 +36,7 @@ export const signin = async (req, res, next) =>{
           }
           validUser.password=undefined;
           res
-          .cookie('acceess_token',token,options)
+          .cookie('access_token',token,options)
           .status(200)
           .json(validUser);
     } catch (error) {

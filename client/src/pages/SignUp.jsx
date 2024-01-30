@@ -3,10 +3,12 @@ import {Link,useNavigate} from 'react-router-dom'
 
 
 export default function SignUp() {
+
   const [formData,setFormData] = useState({});
   const [error,setError] = useState(null);
   const[loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) =>{
     setFormData({
       ...formData,
@@ -14,6 +16,7 @@ export default function SignUp() {
     });
 
   };
+
   const handleSubmit = async (e) =>{
      e.preventDefault();
      try {
@@ -30,7 +33,6 @@ export default function SignUp() {
       if(data.success === false){
         setError(data.message);
         setLoading(false);
-      
         return;
       }
       setLoading(false);
