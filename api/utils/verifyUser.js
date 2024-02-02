@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import {errorHandler} from './error.js'
 
 export const verifyToken = (req,res,next) =>{
    const token = req.cookies.access_token;
@@ -9,7 +10,7 @@ export const verifyToken = (req,res,next) =>{
     if(err) {
       return next(errorHandler(403,'Forbidden'));
     }
-    console.log(user);
+    
     // Storing the decoded JWT payload in the request object for further use
     req.user=user;
     next();

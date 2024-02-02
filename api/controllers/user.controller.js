@@ -27,7 +27,7 @@ export const updateUser = async (req,res,next) =>{
         },{new:true})
         updateUser.password=undefined;
         res.status(200).json(updatedUser);
-    
+
     }
         catch (error) {
         next(error)
