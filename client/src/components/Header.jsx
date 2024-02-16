@@ -1,9 +1,32 @@
-import React from 'react'
+
 import {FaSearch} from 'react-icons/fa';
-import { Link} from 'react-router-dom';
-import {useSelector} from 'react-redux'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {useSelector} from 'react-redux';
+
 export default function Header() {
-  const {currentUser} = useSelector((state) => state.user)
+  const {currentUser} = useSelector((state) => state.user);
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+   const handleSubmit = (e) => {
+    // extracts the URL search parameters from the current window location, sets a search term in these parameters, 
+    // converts the modified parameters back to a string, and then navigates to a new URL that includes the updated search query.
+    e.preventDefault();
+    // console.log(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+    // console.log(window.location.search);
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
   return (
     <div>
     <header className='bg-slate-200 shadow-md'>
@@ -14,11 +37,13 @@ export default function Header() {
           <span className='text-slate-700'>Harbor</span>
         </h1>
       </Link>
-      <form className='bg-slate-100 p-3 rounded-lg flex items-center'>
+      <form onSubmit={handleSubmit} className='bg-slate-100 p-3 rounded-lg flex items-center'>
         <input
           type='text'
           placeholder='Search...'
           className='bg-transparent focus:outline-none w-24 sm:w-64'
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button>
           <FaSearch className='text-slate-600' />

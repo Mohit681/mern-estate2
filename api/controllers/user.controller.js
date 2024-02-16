@@ -69,7 +69,7 @@ export const getUser = async (req, res, next) => {
       const user = await User.findById(req.params.id);
     //   console.log(user);
       if (!user) return next(errorHandler(404, 'User not found!'));
-      const { password: pass, ...rest } = user._doc;
+      user.password=undefined;
       res.status(200).json(rest);
     } catch (error) {
       next(error);
